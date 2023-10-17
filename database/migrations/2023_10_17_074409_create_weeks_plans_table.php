@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('weeks_plans', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->dateTime("startOfWeek");
+            $table->dateTime("start_of_week");
             $table->string("name");
             $table->integer("statistics");
             $table->string("name");
             $table->string("dimension");
-            $table->int("past_weeks_amount");
-            $table->int("quota_for_this_week");
+            $table->integer("past_weeks_amount");
+            $table->integer("quota_for_this_week");
             $table->string("note");
         });
     }
