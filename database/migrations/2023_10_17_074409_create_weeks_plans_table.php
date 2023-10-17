@@ -19,8 +19,8 @@ return new class extends Migration
             $table->integer("statistics");
             $table->string("name");
             $table->string("dimension");
-            $table->int("past weeks amount");
-            $table->int("quota for this week");
+            $table->int("past_weeks_amount");
+            $table->int("quota_for_this_week");
             $table->string("note");
         });
     }
