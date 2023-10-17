@@ -14,12 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('app');
-})->name("app");
-
-Route::get('/dashboard', function () {
     return view('dashboard');
-})->name('dashboard');
+})->name("app");
 
 // Route::view('/{any?}', 'app')
 //     ->where('any', '.*');
