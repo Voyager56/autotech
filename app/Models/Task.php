@@ -9,10 +9,10 @@ class Task extends Model
 {
     use HasFactory;
 
-    protected $casts = [
-        "planned_finish_time" => "hh:mm:ss",
-        "actual_finish_time" => "hh:mm:ss",
-    ];
+    // protected $casts = [
+    //     "planned_finish_time" => "date:h:m:s",
+    //     "actual_finish_time" => "h:m:s",
+    // ];
 
     protected $fillable = [
         "name",

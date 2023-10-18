@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WeeksPlan extends Model
 {
@@ -11,12 +12,16 @@ class WeeksPlan extends Model
 
     protected $fillable = [
         "start_of_week",
-        "name",
-        "statistics",
-        "name",
-        "dimension",
-        "past_weeks_amount",
-        "quota_for_this_week",
-        "note",
+        "first_last_name",
     ];
+
+    public function tasks(): HasMany
+    {
+        return $this->hasMany(Task::class);
+    }
+
+    public function weeksTasks(): HasMany
+    {
+        return $this->hasMany(WeeksTask::class);
+    }
 }

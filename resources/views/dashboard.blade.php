@@ -1,3 +1,3 @@
 <x-app>
-    <home></home>
+    <home :weeks-plan="{{ $weeksPlan }}" :tasks="{{ $tasks }}"></home>
 </x-app>

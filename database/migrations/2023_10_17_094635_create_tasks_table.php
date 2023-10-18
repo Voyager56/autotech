@@ -14,11 +14,13 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('name', ["ამოცანები პროგრამებისა და პროექტებისთვის", "კვოტის მისაღწევად საჭირო ამოცანები", "რეგულარული ამოცანები", "ამოცანები ტრენინგებთან მიმართებაში"]);
+            $table->enum('task_type', ["programming_and_project_task", "quota_task", "regular_task", "training_task"]);
+            $table->string("task_name");
             $table->string("product_of_the_task");
             $table->timestamp("planned_finish_time");
             $table->timestamp("actual_finish_time");
             $table->timestamp("finished_date");
+            $table->foreignId("weeks_plan_id")->constrained()->cascadeOnDelete();
         });
     }
 

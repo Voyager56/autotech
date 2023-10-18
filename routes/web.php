@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\WeeksPlanController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard');
-})->name("app");
+Route::get('/', [WeeksPlanController::class, "index"])->name("app");
+
 
 // Route::view('/{any?}', 'app')
 //     ->where('any', '.*');

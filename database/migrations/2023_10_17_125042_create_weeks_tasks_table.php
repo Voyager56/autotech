@@ -11,11 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weeks_plans', function (Blueprint $table) {
+        Schema::create('weeks_tasks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->timestamp("start_of_week")->default(now());
-            $table->string("first_last_name");
+            $table->string("task_name");
+            $table->string("dimension");
+            $table->integer("past_weeks_amount");
+            $table->integer("quota_for_this_week");
+            $table->string("note");
+            $table->foreignId("weeks_plan_id")->constrained()->cascadeOnDelete();
         });
     }
 
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weeks_plans');
+        Schema::dropIfExists('weeks_tasks');
     }
 };
