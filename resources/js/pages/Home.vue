@@ -32,89 +32,42 @@
             <td>{{ plan.note }}</td>
         </tbody>
     </table>
+    <TaskTable
+        :taskName="'ამოცანები პროგრამებისა და პროექტებისთვის'"
+        :tasks="tasks.programming_and_project_task"
+        :taskTimes="taskTimes.programming_and_project_task"
+    />
+    <TaskTable
+        :taskName="`კვოტის მისაღწევად საჭირო ამოცანები`"
+        :tasks="tasks.quota_task"
+        :taskTimes="taskTimes.quota_task"
+    />
+    <TaskTable
+        :taskName="`რეგულარული ამოცანები`"
+        :tasks="tasks.regular_task"
+        :taskTimes="taskTimes.regular_task"
+    />
+    <TaskTable
+        :taskName="`საბაზისო და ტექნიკური მომსახურება`"
+        :tasks="tasks.training_task"
+        :taskTimes="taskTimes.training_task"
+    />
     <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5">
         <thead>
             <tr>
-                <th>N</th>
-                <th>ამოცანები პროგრამებისა და პროექტებისთვის</th>
-                <th>ამოცანის პროდუქტი</th>
-                <th>დაგეგმილი დრო</th>
-                <th>ფაქტიური დრო</th>
-                <th>შესრულების თარიღი</th>
+                <th></th>
+                <th></th>
+                <th>ჯამური დრო:</th>
+                <th>{{ totalTime.planned_time }}</th>
+                <th>{{ totalTime.actual_time }}</th>
+                <th></th>
             </tr>
         </thead>
-        <tbody v-for="(task, index) in tasks.programming_and_project_task">
-            <td>{{ index + 1 }}</td>
-            <td>{{ task.task_name }}</td>
-            <td>{{ task.product_of_the_task }}</td>
-            <td>{{ task.planned_finish_time }}</td>
-            <td>{{ task.actual_finish_time }}</td>
-            <td>{{ task.finished_date }}</td>
-        </tbody>
-    </table>
-    <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5">
-        <thead>
-            <tr>
-                <th>N</th>
-                <th>კვოტის მისაღწევად საჭირო ამოცანები</th>
-                <th>ამოცანის პროდუქტი</th>
-                <th>დაგეგმილი დრო</th>
-                <th>ფაქტიური დრო</th>
-                <th>შესრულების თარიღი</th>
-            </tr>
-        </thead>
-        <tbody v-for="(task, index) in tasks.quota_task">
-            <td>{{ index + 1 }}</td>
-            <td>{{ task.task_name }}</td>
-            <td>{{ task.product_of_the_task }}</td>
-            <td>{{ task.planned_finish_time }}</td>
-            <td>{{ task.actual_finish_time }}</td>
-            <td>{{ task.finished_date }}</td>
-        </tbody>
-    </table>
-    <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5">
-        <thead>
-            <tr>
-                <th>N</th>
-                <th>რეგულარული ამოცანები</th>
-                <th>ამოცანის პროდუქტი</th>
-                <th>დაგეგმილი დრო</th>
-                <th>ფაქტიური დრო</th>
-                <th>შესრულების თარიღი</th>
-            </tr>
-        </thead>
-        <tbody v-for="(task, index) in tasks.regular_task">
-            <td>{{ index + 1 }}</td>
-            <td>{{ task.task_name }}</td>
-            <td>{{ task.product_of_the_task }}</td>
-            <td>{{ task.planned_finish_time }}</td>
-            <td>{{ task.actual_finish_time }}</td>
-            <td>{{ task.finished_date }}</td>
-        </tbody>
-    </table>
-    <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5">
-        <thead>
-            <tr>
-                <th>N</th>
-                <th>ამოცანები პროგრამებისა და პროექტებისთვის</th>
-                <th>ამოცანის პროდუქტი</th>
-                <th>დაგეგმილი დრო</th>
-                <th>ფაქტიური დრო</th>
-                <th>შესრულების თარიღი</th>
-            </tr>
-        </thead>
-        <tbody v-for="(task, index) in tasks.training_task">
-            <td>{{ index + 1 }}</td>
-            <td>{{ task.task_name }}</td>
-            <td>{{ task.product_of_the_task }}</td>
-            <td>{{ task.planned_finish_time }}</td>
-            <td>{{ task.actual_finish_time }}</td>
-            <td>{{ task.finished_date }}</td>
-        </tbody>
     </table>
 </template>
 
 <script setup>
+import TaskTable from "../components/TaskTable.vue";
 defineProps({
     weeksPlan: {
         type: Object,
@@ -122,25 +75,20 @@ defineProps({
     },
 
     tasks: {
-        type: Array,
+        type: Object,
+        required: true,
+    },
+
+    taskTimes: {
+        type: Object,
+        required: true,
+    },
+
+    totalTime: {
+        type: Object,
         required: true,
     },
 });
-
-// "programming_and_project_task", "quota_task", "regular_task", "training_task"
-
-const taskTypes = {
-    programming_and_project_task: "პროგრამირება და პროექტები",
-    quota_task: "კვოტები",
-    regular_task: "რეგულარი დავალება",
-    training_task: "ტრენინგი",
-};
 </script>
 
-<style scoped>
-table,
-th,
-td {
-    border: 1px solid;
-}
-</style>
+<style scoped></style>
