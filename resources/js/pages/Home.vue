@@ -16,51 +16,7 @@
             >დაიწყე ახალი კვირა</a
         >
     </div>
-    <table
-        class="table-fixed border-spacing-2 w-[100%] text-left mt-5"
-        v-for="(plan, index) in weeksPlan.weeks_tasks"
-    >
-        <thead>
-            <tr>
-                <th class="border border-violet-950 bg-[#e2e8f0]">
-                    სტატისტიკები
-                </th>
-                <th class="border border-violet-950 bg-[#e2e8f0]">
-                    დასახელება
-                </th>
-                <th class="border border-violet-950 bg-[#e2e8f0]">
-                    განზომილება
-                </th>
-                <th class="border border-violet-950 bg-[#e2e8f0]">
-                    რაოდენობა გასული კვირის
-                </th>
-                <th class="border border-violet-950 bg-[#e2e8f0]">
-                    კვოტა მიმდინარე კვირის
-                </th>
-                <th class="border border-violet-950 bg-[#e2e8f0]">შენიშვნა</th>
-            </tr>
-        </thead>
-        <tbody>
-            <td class="border border-violet-950">
-                {{ index + 1 }}
-            </td>
-            <td class="border border-violet-950">
-                {{ plan.task_name }}
-            </td>
-            <td class="border border-violet-950">
-                {{ plan.dimension }}
-            </td>
-            <td class="border border-violet-950">
-                {{ plan.past_weeks_amount }}
-            </td>
-            <td class="border border-violet-950">
-                {{ plan.quota_for_this_week }}
-            </td>
-            <td class="border border-violet-950">
-                {{ plan.note }}
-            </td>
-        </tbody>
-    </table>
+    <WeeksTasks :weeks_tasks="weeksPlan.weeks_tasks" :weekId="weeksPlan.id" />
     <TaskTable
         :taskName="'ამოცანები პროგრამებისა და პროექტებისთვის'"
         :tasks="tasks.programming_and_project_task"
@@ -99,6 +55,7 @@
 
 <script setup>
 import TaskTable from "../components/TaskTable.vue";
+import WeeksTasks from "../components/WeeksTasks.vue";
 
 defineProps({
     weeksPlan: {

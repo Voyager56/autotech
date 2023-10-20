@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\WeeksPlanController;
+use App\Http\Controllers\WeeksTasksController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,12 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [WeeksPlanController::class, "index"])->name("app");
+Route::get('/', [WeeksPlanController::class, "index"])->name("dashboard");
 
 Route::get("/weeks-plan", function () {
     return view("week-create");
 })->name("weeks-plan.create");
 
+Route::post("/weeks-plan", [WeeksPlanController::class, "create"])->name("weeks-plan.create");
+Route::post("/weeks-task/{weeksPlan}", [WeeksTasksController::class, "create"])->name("weeks-task.create");
+Route::delete("/weeks-task/{weeksTask}", [WeeksTasksController::class, "delete"])->name("weeks-task.create");
 
 // Route::view('/{any?}', 'app')
 //     ->where('any', '.*');

@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateWeekRequest;
 use App\Models\WeeksPlan;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class WeeksPlanController extends Controller
 {
     public function index()
     {
-        $weeksPlan = WeeksPlan::first();
+        $weeksPlan = WeeksPlan::latest()->first();
         if (!$weeksPlan) {
             return redirect()->route("weeksplan.create");
         }
@@ -40,5 +42,18 @@ class WeeksPlanController extends Controller
             "timeForEachTaskType" => $timeForEachTaskType,
             "totalTime" => $totalTime,
         ]);
+    }
+
+    public function create(CreateWeekRequest $request)
+    {
+        $week = WeeksPlan::create([
+            "first_last_name" => $request->name,
+        ]);
+
+        if ($week) {
+            return response()->json(["redirect" => route("dashboard")], 200);
+        }
+
+        return response()->json('error', 500);
     }
 }

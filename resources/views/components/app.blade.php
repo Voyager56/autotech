@@ -16,7 +16,7 @@
 </head>
 
 <body class="antialiased">
-    <div id="app" class="app">
+    <div id="app" class="app bg-slate-600 h-screen">
         {{ $slot }}
     </div>
 </body>
