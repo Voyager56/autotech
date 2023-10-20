@@ -31,4 +31,17 @@ class WeeksTasksController extends Controller
         $weeksTask->delete();
         return response()->json(["redirect" => route("dashboard")], 200);
     }
+
+    public function edit(WeeksTask $weeksTask, CreateWeekTaskRequest $req)
+    {
+        $weeksTask->update([
+            "dimension" => $req->dimension,
+            "note" => $req->note,
+            "past_weeks_amount" => $req->pastWeeksAmount,
+            "quota_for_this_week" => $req->quotaForThisWeek,
+            "task_name" => $req->statistic,
+        ]);
+
+        return response()->json(["redirect" => route("dashboard")], 200);
+    }
 }

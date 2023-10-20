@@ -44,7 +44,7 @@
                 class="border border-violet-950 bg-[#b6cdec] flex justify-around"
             >
                 <button @click="deleteStat(plan.id)">წაშლა</button>
-                <button>შესწორება</button>
+                <button @click="openEditingModal(plan)">შესწორება</button>
             </td>
         </tbody>
     </table>
@@ -59,13 +59,26 @@
         :weekId="weekId"
         @close="addStatModal = false"
     />
+    <EditStat
+        :modal="editStatsModal"
+        :weekTask="selectedWeek"
+        @close="editStatsModal = false"
+    />
 </template>
 
 <script setup>
 import AddStat from "./AddStat.vue";
+import EditStat from "./EditStat.vue";
 import { ref } from "vue";
 
 const addStatModal = ref(false);
+const editStatsModal = ref(false);
+
+const selectedWeek = ref(null);
+const openEditingModal = (weeksTask) => {
+    selectedWeek.value = weeksTask;
+    editStatsModal.value = true;
+};
 
 const deleteStat = (id) => {
     axios.delete(`/weeks-task/${id}`).then((res) => {
