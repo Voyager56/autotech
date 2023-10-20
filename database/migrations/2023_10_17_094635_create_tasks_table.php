@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string("task_name");
             $table->string("product_of_the_task");
             $table->time("planned_finish_time");
-            $table->time("actual_finish_time");
-            $table->timestamp("finished_date");
+            $table->time("actual_finish_time")->nullable();
+            $table->timestamp("finished_date")->nullable();
             $table->foreignId("weeks_plan_id")->constrained()->cascadeOnDelete();
         });
     }

@@ -14,42 +14,33 @@
                         name="statistic"
                         type="text"
                         rules="required"
-                        :value="weekTask.task_name"
                     />
                     <FormField
                         placeholder="განზომილება"
                         name="dimension"
                         type="number"
                         rules="required"
-                        :value="weekTask.dimension"
                     />
                     <FormField
                         placeholder="რაოდენობა გასული კვირის	"
                         name="pastWeeksAmount"
                         type="number"
                         rules="required"
-                        :value="weekTask.past_weeks_amount"
                     />
                     <FormField
                         placeholder="კვოტა მიმდინარე კვირის	"
                         name="quotaForThisWeek"
                         type="number"
                         rules="required"
-                        :value="weekTask.quota_for_this_week"
                     />
-                    <FormField
-                        placeholder="შენიშვნა"
-                        name="note"
-                        type="text"
-                        :value="weekTask.note"
-                    />
+                    <FormField placeholder="შენიშვნა" name="note" type="text" />
                 </div>
 
                 <button
-                    @click="editStat($event, values, weekTask.id)"
+                    @click="addStatistic($event, values, weekId)"
                     class="bg-[#b6cdec] my-2 border-[#6C757D] border-[2px] px-3 py-2 w-[20rem]"
                 >
-                    ჩაასწორე სტატისტიკა
+                    დაამატე სტატისტიკა
                 </button>
             </Form>
         </div>
@@ -57,7 +48,7 @@
 </template>
 
 <script setup>
-import FormField from "../components/FormField.vue";
+import FormField from "../FormField.vue";
 import { Form } from "vee-validate";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
@@ -67,8 +58,9 @@ defineProps({
         type: Boolean,
         required: true,
     },
-    weekTask: {
-        type: Object,
+
+    weekId: {
+        type: Number,
         required: true,
     },
 });
@@ -80,11 +72,10 @@ onClickOutside(modalRef, () => {
     emit("close");
 });
 
-const editStat = (e, values, id) => {
+const addStatistic = (e, values, weekId) => {
     e.preventDefault();
-    axios.put(`/weeks-task/${id}`, values).then((res) => {
+    axios.post(`/weeks-task/${weekId}`, values).then((res) => {
         window.location.reload();
     });
-    console.log(values);
 };
 </script>

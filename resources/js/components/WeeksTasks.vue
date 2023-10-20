@@ -67,8 +67,8 @@
 </template>
 
 <script setup>
-import AddStat from "./AddStat.vue";
-import EditStat from "./EditStat.vue";
+import AddStat from "./Modals/AddStat.vue";
+import EditStat from "./Modals/EditStat.vue";
 import { ref } from "vue";
 
 const addStatModal = ref(false);

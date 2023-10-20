@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TasksController;
 use App\Http\Controllers\WeeksPlanController;
 use App\Http\Controllers\WeeksTasksController;
 use Illuminate\Http\Request;
@@ -23,6 +24,10 @@ Route::get("/weeks-plan", function () {
 })->name("weeks-plan.create");
 
 Route::post("/weeks-plan", [WeeksPlanController::class, "create"])->name("weeks-plan.create");
+
+
 Route::post("/weeks-task/{weeksPlan}", [WeeksTasksController::class, "create"])->name("weeks-task.create");
 Route::delete("/weeks-task/{weeksTask}", [WeeksTasksController::class, "delete"])->name("weeks-task.delete");
 Route::put("/weeks-task/{weeksTask}", [WeeksTasksController::class, "edit"])->name("weeks-task.edit");
+
+Route::post("/tasks/{weeksTask}", [TasksController::class, "create"])->name("tasks.create");

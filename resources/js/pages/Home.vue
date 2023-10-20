@@ -33,10 +33,16 @@
         :taskTimes="taskTimes.regular_task"
     />
     <TaskTable
-        :taskName="`საბაზისო და ტექნიკური მომსახურება`"
+        :taskName="`ამოცანები ტრენინგებთან მიმართებაში`"
         :tasks="tasks.training_task"
         :taskTimes="taskTimes.training_task"
     />
+    <button
+        @click="addStatModal = true"
+        class="bg-[#b6cdec] my-2 border-[#6C757D] border-[2px] px-3 py-2 w-[20rem]"
+    >
+        დაამატე დავალება
+    </button>
     <table
         class="table-fixed border-spacing-2 w-[100%] text-left mt-5 bg-[#466184]"
     >
@@ -51,11 +57,21 @@
             </tr>
         </thead>
     </table>
+
+    <AddTask
+        :modal="addStatModal"
+        :week-id="weeksPlan.id"
+        @close="addStatModal = false"
+    />
 </template>
 
 <script setup>
+import AddTask from "../components/Modals/AddTask.vue";
 import TaskTable from "../components/TaskTable.vue";
 import WeeksTasks from "../components/WeeksTasks.vue";
+import { ref } from "vue";
+
+const addStatModal = ref(false);
 
 defineProps({
     weeksPlan: {

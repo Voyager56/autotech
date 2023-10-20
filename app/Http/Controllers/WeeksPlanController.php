@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateWeekRequest;
 use App\Models\WeeksPlan;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 
 class WeeksPlanController extends Controller
@@ -13,34 +14,70 @@ class WeeksPlanController extends Controller
     {
         $weeksPlan = WeeksPlan::latest()->first();
         if (!$weeksPlan) {
-            return redirect()->route("weeksplan.create");
+            return redirect()->route("weeks-plan.create");
         }
         $tasks = $weeksPlan->tasks()->get()->groupBy("task_type");
         $timeForEachTaskType = array();
         $totalTime = [
-            "actual_time" => 0,
-            "planned_time" => 0,
+            "actual_time" => [
+                "hours" => 0,
+                "minutes" => 0,
+                "seconds" => 0,
+            ],
+            "planned_time" => [
+                "hours" => 0,
+                "minutes" => 0,
+                "seconds" => 0,
+            ],
         ];
         foreach ($tasks as $taskType => $task) {
-            $actualTotalSeconds = 0;
-            $plannedTotalSeconds = 0;
+            $taskActualTime = [
+                "hours" => 0,
+                "minutes" => 0,
+                "seconds" => 0,
+            ];
+            $taskPlannedtime = [
+                "hours" => 0,
+                "minutes" => 0,
+                "seconds" => 0,
+            ];
             foreach ($task as $t) {
-                $actualTotalSeconds += strtotime($t->actual_finish_time);
-                $plannedTotalSeconds += strtotime($t->planned_finish_time);
-                $totalTime["actual_time"] += strtotime($t->actual_finish_time);
-                $totalTime["planned_time"] += strtotime($t->planned_finish_time);
+                $plannedTime = date_parse($t->planned_finish_time);
+                $taskPlannedtime["hours"] += $plannedTime["hour"];
+                $taskPlannedtime["minutes"] += $plannedTime["minute"];
+                $taskPlannedtime["seconds"] += $plannedTime["second"];
+
+                $actualTime = date_parse($t->actual_finish_time);
+                $taskActualTime["hours"] += $actualTime["hour"];
+                $taskActualTime["minutes"] += $actualTime["minute"];
+                $taskActualTime["seconds"] += $actualTime["second"];
+
+                $totalTime["actual_time"]['hours'] += $actualTime["hour"];
+                $totalTime["actual_time"]['minutes'] += $actualTime["minute"];
+                $totalTime["actual_time"]['seconds'] += $actualTime["second"];
+
+                $totalTime["planned_time"]['hours'] += $plannedTime["hour"];
+                $totalTime["planned_time"]['minutes'] += $plannedTime["minute"];
+                $totalTime["planned_time"]['seconds'] += $plannedTime["second"];
             }
-            $timeForEachTaskType[$taskType]['actual_time'] = date("H:i:s", $actualTotalSeconds);
-            $timeForEachTaskType[$taskType]['planned_time'] = date("H:i:s", $plannedTotalSeconds);
+
+            $timeForEachTaskType[$taskType] = [
+                "planned_time" => $taskPlannedtime["hours"] . ":" . $taskPlannedtime["minutes"] . ":" . $taskPlannedtime["seconds"],
+                "actual_time" => $taskActualTime["hours"] . ":" . $taskActualTime["minutes"] . ":" . $taskActualTime["seconds"],
+            ];
         }
-        $totalTime['actual_time'] = date("H:i:s", $totalTime['actual_time']);
-        $totalTime['planned_time'] = date("H:i:s", $totalTime['planned_time']);
+
+        $formatedTotalTime = [
+            "actual_time" => $totalTime["actual_time"]["hours"] . ":" . $totalTime["actual_time"]["minutes"] . ":" . $totalTime["actual_time"]["seconds"],
+            "planned_time" => $totalTime["planned_time"]["hours"] . ":" . $totalTime["planned_time"]["minutes"] . ":" . $totalTime["planned_time"]["seconds"],
+        ];
+
         $weeksPlan->weeksTasks;
         return view("dashboard", [
             "weeksPlan" => $weeksPlan,
             "tasks" => $tasks,
             "timeForEachTaskType" => $timeForEachTaskType,
-            "totalTime" => $totalTime,
+            "totalTime" => $formatedTotalTime,
         ]);
     }
 
