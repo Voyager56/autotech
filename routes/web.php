@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [WeeksPlanController::class, "index"])->name("app");
 
+Route::get("/weeks-plan", function () {
+    return view("week-create");
+})->name("weeks-plan.create");
+
 
 // Route::view('/{any?}', 'app')
 //     ->where('any', '.*');

@@ -1,30 +1,46 @@
 <template>
-    <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5">
-        <thead>
+    <table class="table-fixed border-spacing-2 w-[100%] text-left mt-5 borde">
+        <thead class="border border-violet-950">
             <tr>
-                <th>N</th>
-                <th>{{ taskName }}</th>
-                <th>ამოცანის პროდუქტი</th>
-                <th>დაგეგმილი დრო</th>
-                <th>ფაქტიური დრო</th>
-                <th>შესრულების თარიღი</th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">N</th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">
+                    {{ taskName }}
+                </th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">
+                    ამოცანის პროდუქტი
+                </th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">
+                    დაგეგმილი დრო
+                </th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">
+                    ფაქტიური დრო
+                </th>
+                <th class="border border-violet-950 bg-[#e2e8f0]">
+                    შესრულების თარიღი
+                </th>
             </tr>
         </thead>
         <tbody v-for="(task, index) in tasks">
-            <td>{{ index + 1 }}</td>
-            <td>{{ task.task_name }}</td>
-            <td>{{ task.product_of_the_task }}</td>
-            <td>{{ task.planned_finish_time }}</td>
-            <td>{{ task.actual_finish_time }}</td>
-            <td>{{ task.finished_date }}</td>
+            <td class="border border-violet-950">{{ index + 1 }}</td>
+            <td class="border border-violet-950">{{ task.task_name }}</td>
+            <td class="border border-violet-950">
+                {{ task.product_of_the_task }}
+            </td>
+            <td class="border border-violet-950">
+                {{ task.planned_finish_time }}
+            </td>
+            <td class="border border-violet-950">
+                {{ task.actual_finish_time }}
+            </td>
+            <td class="border border-violet-950">{{ task.finished_date }}</td>
         </tbody>
-        <thead class="pt-[100px]">
+        <tfoot>
             <td class="border-0"></td>
-            <td></td>
-            <td>ჯამური დრო:</td>
-            <td>{{ taskTimes?.planned_time || 0 }}</td>
-            <td>{{ taskTimes?.actual_time || 0 }}</td>
-        </thead>
+            <td class="border-0"></td>
+            <td class="bg-slate-500">ჯამური დრო:</td>
+            <td class="bg-slate-500">{{ taskTimes?.planned_time || 0 }}</td>
+            <td class="bg-slate-500">{{ taskTimes?.actual_time || 0 }}</td>
+        </tfoot>
     </table>
 </template>
 
@@ -45,15 +61,3 @@ defineProps({
     },
 });
 </script>
-
-<style scpoed>
-th {
-    background-color: #e2e8f0;
-}
-
-table,
-th,
-td {
-    border: 1px solid;
-}
-</style>
