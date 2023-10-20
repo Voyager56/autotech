@@ -31,3 +31,5 @@ Route::delete("/weeks-task/{weeksTask}", [WeeksTasksController::class, "delete"]
 Route::put("/weeks-task/{weeksTask}", [WeeksTasksController::class, "edit"])->name("weeks-task.edit");
 
 Route::post("/tasks/{weeksTask}", [TasksController::class, "create"])->name("tasks.create");
+Route::delete("/tasks/{task}", [TasksController::class, "delete"])->name("tasks.delete");
+Route::put("/tasks/{task}", [TasksController::class, "edit"])->name("tasks.edit");

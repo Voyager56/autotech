@@ -46,6 +46,7 @@
                 </div>
 
                 <button
+                    :disabled="!meta.valid"
                     @click="editStat($event, values, weekTask.id)"
                     class="bg-[#b6cdec] my-2 border-[#6C757D] border-[2px] px-3 py-2 w-[20rem]"
                 >
