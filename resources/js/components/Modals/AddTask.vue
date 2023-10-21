@@ -26,6 +26,7 @@
                     <option value="training_task">
                         ამოცანები ტრენინგებთან მიმართებაში
                     </option>
+                    <option value="unplanned_task">დაუგეგმავი ამოცანები</option>
                 </Field>
                 <ErrorMessage name="productType" class="text-[#e76f51]" />
                 <FormField
@@ -41,6 +42,7 @@
                     rules="required"
                 />
                 <FormField
+                    v-if="values.taskType !== 'unplanned_task'"
                     placeholder="დაგეგმილი დრო HH:MM:SS"
                     name="plannedDate"
                     type="text"

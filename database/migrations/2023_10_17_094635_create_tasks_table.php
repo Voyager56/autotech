@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->enum('task_type', ["programming_and_project_task", "quota_task", "regular_task", "training_task"]);
+            $table->enum('task_type', ["programming_and_project_task", "quota_task", "regular_task", "training_task", "unplanned_task"]);
             $table->string("task_name");
             $table->string("product_of_the_task");
-            $table->time("planned_finish_time");
+            $table->time("planned_finish_time")->nullable();
             $table->time("actual_finish_time")->nullable();
             $table->timestamp("finished_date")->nullable();
             $table->foreignId("weeks_plan_id")->constrained()->cascadeOnDelete();

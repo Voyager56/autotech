@@ -23,7 +23,7 @@ class CreateTaskRequest extends FormRequest
     {
         return [
             "taskType" => ["required", "string"],
-            "plannedDate" => ["required", "date_format:H:i:s"],
+            "plannedDate" => ["required_if:taskType,programming_and_project_task,quota_task,regular_task,training_task", "date_format:Y-m-d"],
             "productOfTask" => ["required", "string"],
             "taskName" => ["required", "string"],
         ];

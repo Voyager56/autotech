@@ -24,7 +24,7 @@
                         :value="weekTask.dimension"
                     />
                     <FormField
-                        placeholder="რაოდენობა გასული კვირის	"
+                        placeholder="რაოდენობა გასული კვირის"
                         name="pastWeeksAmount"
                         type="number"
                         rules="required"

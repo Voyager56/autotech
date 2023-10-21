@@ -63,6 +63,12 @@
         :week-id="weeksPlan.id"
         @close="addStatModal = false"
     />
+
+    <TaskTable
+        :taskName="'დაუგეგმავი ამოცანები'"
+        :tasks="tasks.unplanned_task"
+        :taskTimes="taskTimes.unplanned_task"
+    />
 </template>
 
 <script setup>

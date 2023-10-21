@@ -27,6 +27,7 @@
                     <option value="training_task">
                         ამოცანები ტრენინგებთან მიმართებაში
                     </option>
+                    <option value="unplanned_task">დაუგეგმავი ამოცანები</option>
                 </Field>
                 <ErrorMessage name="productType" class="text-[#e76f51]" />
                 <FormField
@@ -44,6 +45,7 @@
                     rules="required"
                 />
                 <FormField
+                    v-if="values.taskType !== 'unplanned_task'"
                     placeholder="დაგეგმილი დრო HH:MM:SS"
                     name="plannedDate"
                     type="text"
@@ -62,7 +64,7 @@
                     name="completionDate"
                     type="datetime-local"
                     :value="
-                        task.finished_date.split(' ').join('T').slice(0, -3)
+                        task.finished_date?.split(' ').join('T').slice(0, -3)
                     "
                     rules="required"
                 />
@@ -71,7 +73,7 @@
                     @click="editTask($event, values, task)"
                     class="bg-[#b6cdec] my-2 border-[#6C757D] border-[2px] px-3 py-2 w-[20rem]"
                 >
-                    დაამატე სტატისტიკა
+                    ჩაასწორე სტატისტიკა
                 </button>
             </Form>
         </div>
