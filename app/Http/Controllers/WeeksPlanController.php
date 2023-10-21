@@ -4,19 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateWeekRequest;
 use App\Models\WeeksPlan;
-use Carbon\Carbon;
-use Carbon\CarbonInterval;
-use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 
 class WeeksPlanController extends Controller
 {
-    public function index()
+    public function index(): View
     {
         $weeksPlan = WeeksPlan::latest()->first();
         if (!$weeksPlan) {
             return redirect()->route("weeks-plan.create");
         }
         $tasks = $weeksPlan->tasks()->get()->groupBy("task_type");
+
+        [$timeForEachTaskType, $formatedTotalTime] = $this->calculateTime($tasks);
+
+        $weeksPlan->weeksTasks;
+        return view("dashboard", [
+            "weeksPlan" => $weeksPlan,
+            "tasks" => $tasks,
+            "timeForEachTaskType" => $timeForEachTaskType,
+            "totalTime" => $formatedTotalTime,
+        ]);
+    }
+
+    public function create(CreateWeekRequest $request): JsonResponse
+    {
+        $week = WeeksPlan::create([
+            "first_last_name" => $request->name,
+        ]);
+
+        if ($week) {
+            return response()->json(["redirect" => route("dashboard")], 200);
+        }
+
+        return response()->json('error', 500);
+    }
+
+    private function calculateTime($tasks): array
+    {
         $timeForEachTaskType = array();
         $totalTime = [
             "actual_time" => [
@@ -72,25 +98,6 @@ class WeeksPlanController extends Controller
             "planned_time" => $totalTime["planned_time"]["hours"] . ":" . $totalTime["planned_time"]["minutes"] . ":" . $totalTime["planned_time"]["seconds"],
         ];
 
-        $weeksPlan->weeksTasks;
-        return view("dashboard", [
-            "weeksPlan" => $weeksPlan,
-            "tasks" => $tasks,
-            "timeForEachTaskType" => $timeForEachTaskType,
-            "totalTime" => $formatedTotalTime,
-        ]);
-    }
-
-    public function create(CreateWeekRequest $request)
-    {
-        $week = WeeksPlan::create([
-            "first_last_name" => $request->name,
-        ]);
-
-        if ($week) {
-            return response()->json(["redirect" => route("dashboard")], 200);
-        }
-
-        return response()->json('error', 500);
+        return [$timeForEachTaskType, $formatedTotalTime];
     }
 }

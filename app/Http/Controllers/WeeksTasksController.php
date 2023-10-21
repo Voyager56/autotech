@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CreateWeekTaskRequest;
 use App\Models\WeeksPlan;
 use App\Models\WeeksTask;
+use Illuminate\Http\JsonResponse;
 
 class WeeksTasksController extends Controller
 {
-    public function create(WeeksPlan $weeksPlan, CreateWeekTaskRequest $req,)
+    public function create(WeeksPlan $weeksPlan, CreateWeekTaskRequest $req): JsonResponse
     {
         $weeksTask = $weeksPlan->weeksTasks()->create([
             "dimension" => $req->dimension,
@@ -26,13 +27,13 @@ class WeeksTasksController extends Controller
         return response()->json(["redirect" => route("dashboard")], 200);
     }
 
-    public function delete(WeeksTask $weeksTask)
+    public function delete(WeeksTask $weeksTask): JsonResponse
     {
         $weeksTask->delete();
         return response()->json(["redirect" => route("dashboard")], 200);
     }
 
-    public function edit(WeeksTask $weeksTask, CreateWeekTaskRequest $req)
+    public function edit(WeeksTask $weeksTask, CreateWeekTaskRequest $req): JsonResponse
     {
         $weeksTask->update([
             "dimension" => $req->dimension,

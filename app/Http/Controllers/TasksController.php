@@ -6,10 +6,11 @@ use App\Http\Requests\CreateTaskRequest;
 use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Models\WeeksPlan;
+use Illuminate\Http\JsonResponse;
 
 class TasksController extends Controller
 {
-    public function create(CreateTaskRequest $request, WeeksPlan $weeksTask)
+    public function create(CreateTaskRequest $request, WeeksPlan $weeksTask): JsonResponse
     {
         $task = $weeksTask->tasks()->create([
             "task_name" => $request->taskName,
@@ -25,14 +26,14 @@ class TasksController extends Controller
         return response()->json(["redirect" => route("dashboard")], 200);
     }
 
-    public function delete(Task $task)
+    public function delete(Task $task): JsonResponse
     {
         $task->delete();
 
         return response()->json(["redirect" => route("dashboard")], 200);
     }
 
-    public function edit(UpdateTaskRequest $request, Task $task)
+    public function edit(UpdateTaskRequest $request, Task $task): JsonResponse
     {
         $task->update([
             "task_name" => $request->taskName,
